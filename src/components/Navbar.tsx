@@ -37,8 +37,6 @@ export const Navbar: React.FC = () => {
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Suites', path: '/suites' },
-    { name: 'Dining', path: '/dining' },
-    { name: 'Experiences', path: '/experiences' },
   ];
 
   return (
@@ -73,8 +71,8 @@ export const Navbar: React.FC = () => {
           {/* CTA - Desktop */}
           <div className="hidden md:block">
             <button className={`px-6 py-2.5 text-xs font-bold uppercase tracking-widest border transition-all duration-300 ${isScrolled || location.pathname !== '/'
-                ? 'border-forest-800 text-forest-800 hover:bg-forest-800 hover:text-white'
-                : 'border-white text-white hover:bg-white hover:text-forest-800'
+              ? 'border-forest-800 text-forest-800 hover:bg-forest-800 hover:text-white'
+              : 'border-white text-white hover:bg-white hover:text-forest-800'
               }`}>
               Book Your Stay
             </button>
