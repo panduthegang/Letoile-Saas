@@ -1,0 +1,38 @@
+/* 1. Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Manrope:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap');
+
+/* 2. Tailwind Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 3. Base Styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* FIX: Use standard CSS here instead of @apply to avoid build errors */
+  body {
+    background-color: #FDFCF8; /* cream-50 */
+    color: #1A3C34; /* forest-800 */
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: #C16E4C; /* terra-500 */
+    color: #ffffff;
+  }
+}
+
+/* 4. Utilities */
+@layer utilities {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
