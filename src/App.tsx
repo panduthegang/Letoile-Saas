@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
+import SuitesPage from './pages/SuitesPage';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 
@@ -25,6 +26,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/suites" element={<SuitesPage />} />
           </Routes>
         </main>
         <Footer />

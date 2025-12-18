@@ -1,14 +1,16 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Star, ArrowUpRight, Wifi, Car, Crown, Gem } from 'lucide-react';
 import { Button } from '../components/Button';
 import { Marquee } from '../components/Marquee';
 import { Accordion } from '../components/Accordion';
 import { Testimonial, FaqItem } from '../types';
+import { Reveal } from '../components/Reveal';
+import { ParallaxImage } from '../components/ParallaxImage';
 
 // Updated Image URLs (High Quality Unsplash)
 const IMAGES = {
-  hero: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=3870&auto=format&fit=crop",
+  hero: "https://images.unsplash.com/photo-1529316275402-0462fcc4abd6?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   interior: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=2070&auto=format&fit=crop",
   artGallery: "https://images.unsplash.com/photo-1554907984-15263bfd63bd?q=80&w=2070&auto=format&fit=crop", // Updated to a better gallery/museum shot
   room1: "https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=1974&auto=format&fit=crop",
@@ -56,38 +58,7 @@ const faqs: FaqItem[] = [
 ];
 
 // Helper Animations
-const Reveal = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 1, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-};
 
-const ParallaxImage = ({ src, alt, className }: { src: string, alt: string, className?: string }) => {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const scale = useTransform(scrollYProgress, [0, 1], [1.1, 1]);
-
-  return (
-    <div ref={ref} className={`overflow-hidden ${className}`}>
-      <motion.img 
-        style={{ scale }}
-        src={src} 
-        alt={alt} 
-        className="w-full h-full object-cover"
-      />
-    </div>
-  );
-}
 
 const RoomCard = ({ img, title, price, delay }: { img: string, title: string, price: string, delay: number }) => (
   <Reveal delay={delay} className="group cursor-pointer">
@@ -117,13 +88,13 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className="bg-cream-50">
-      
+
       {/* Hero Section - Magazine Cover Style */}
       <section ref={heroRef} className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-forest-900">
         <motion.div style={{ y }} className="absolute inset-0">
-           <img src={IMAGES.hero} alt="Hotel Hero" className="w-full h-full object-cover brightness-[0.85]" />
+          <img src={IMAGES.hero} alt="Hotel Hero" className="w-full h-full object-cover brightness-[0.85]" />
         </motion.div>
-        
+
         <div className="relative z-10 text-center text-white px-6 max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
@@ -131,7 +102,7 @@ const LandingPage: React.FC = () => {
             transition={{ duration: 1, ease: "easeOut" }}
             className="border-[1px] border-white/30 p-8 md:p-16 backdrop-blur-[2px]"
           >
-            <motion.span 
+            <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.6 }}
@@ -139,13 +110,13 @@ const LandingPage: React.FC = () => {
             >
               The Pinnacle of Living
             </motion.span>
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
               className="text-6xl md:text-8xl lg:text-9xl font-display font-medium leading-[0.9] mb-8"
             >
-              L'Etoile <br/> <span className="italic">Royale</span>
+              L'Etoile <br /> <span className="italic">Royale</span>
             </motion.h1>
             <motion.div
               initial={{ opacity: 0 }}
@@ -164,15 +135,15 @@ const LandingPage: React.FC = () => {
       <section className="py-32 px-6 bg-cream-50">
         <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <div className="order-2 lg:order-1 relative">
-             <div className="absolute -top-10 -left-10 w-full h-full border border-terra-500/20 z-0"></div>
-             <ParallaxImage src={IMAGES.interior} alt="Lobby" className="relative z-10 aspect-[4/5] shadow-2xl" />
+            <div className="absolute -top-10 -left-10 w-full h-full border border-terra-500/20 z-0"></div>
+            <ParallaxImage src={IMAGES.interior} alt="Lobby" className="relative z-10 aspect-[4/5] shadow-2xl" />
           </div>
           <div className="order-1 lg:order-2 space-y-8">
             <Reveal>
-               <span className="text-terra-500 font-bold text-xs uppercase tracking-widest">Since 1924</span>
-               <h2 className="text-5xl md:text-6xl font-display text-forest-800 mt-6 leading-tight">
-                 A Timeless <span className="italic text-terra-500">Masterpiece</span> in the Heart of Paris
-               </h2>
+              <span className="text-terra-500 font-bold text-xs uppercase tracking-widest">Since 1924</span>
+              <h2 className="text-5xl md:text-6xl font-display text-forest-800 mt-6 leading-tight">
+                A Timeless <span className="italic text-terra-500">Masterpiece</span> in the Heart of Paris
+              </h2>
             </Reveal>
             <Reveal delay={0.2}>
               <p className="text-lg text-forest-800/70 font-sans leading-relaxed">
@@ -185,20 +156,20 @@ const LandingPage: React.FC = () => {
               </p>
             </Reveal>
             <Reveal delay={0.4} className="pt-4">
-               <div className="flex gap-12">
-                 <div>
-                   <span className="block text-4xl font-display text-forest-800">120</span>
-                   <span className="text-xs uppercase tracking-widest text-forest-800/50">Suites</span>
-                 </div>
-                 <div>
-                   <span className="block text-4xl font-display text-forest-800">3</span>
-                   <span className="text-xs uppercase tracking-widest text-forest-800/50">Restaurants</span>
-                 </div>
-                  <div>
-                   <span className="block text-4xl font-display text-forest-800">1</span>
-                   <span className="text-xs uppercase tracking-widest text-forest-800/50">Spa</span>
-                 </div>
-               </div>
+              <div className="flex gap-12">
+                <div>
+                  <span className="block text-4xl font-display text-forest-800">120</span>
+                  <span className="text-xs uppercase tracking-widest text-forest-800/50">Suites</span>
+                </div>
+                <div>
+                  <span className="block text-4xl font-display text-forest-800">3</span>
+                  <span className="text-xs uppercase tracking-widest text-forest-800/50">Restaurants</span>
+                </div>
+                <div>
+                  <span className="block text-4xl font-display text-forest-800">1</span>
+                  <span className="text-xs uppercase tracking-widest text-forest-800/50">Spa</span>
+                </div>
+              </div>
             </Reveal>
           </div>
         </div>
@@ -217,7 +188,7 @@ const LandingPage: React.FC = () => {
               <Button variant="ghost" withArrow>View All Accommodations</Button>
             </Reveal>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <RoomCard img={IMAGES.room1} title="Prestige Suite" price="From €1,200" delay={0.1} />
             <RoomCard img={IMAGES.room2} title="Royal Atelier" price="From €2,500" delay={0.2} />
@@ -227,24 +198,24 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* Art Collection - Replaces Dining */}
-      <section 
+      <section
         className="relative py-40 flex items-center justify-center bg-fixed bg-center bg-cover"
         style={{ backgroundImage: `url(${IMAGES.artGallery})` }}
       >
         <div className="absolute inset-0 bg-forest-900/60"></div>
         <div className="relative z-10 text-center max-w-3xl px-6">
-           <Reveal>
-             <div className="inline-block p-16 bg-cream-50 shadow-2xl text-center border-t-4 border-terra-500">
-               <Gem className="w-8 h-8 mx-auto text-terra-500 mb-6" />
-               <h2 className="text-4xl md:text-5xl font-display text-forest-800 mb-6">The Royal Gallery</h2>
-               <p className="text-forest-800/70 mb-8 leading-relaxed font-sans text-lg">
-                 Home to one of the largest private art collections in Europe. 
-                 Wander through corridors adorned with original Renaissance masterpieces 
-                 and contemporary avant-garde installations.
-               </p>
-               <Button variant="terra">Schedule Private Tour</Button>
-             </div>
-           </Reveal>
+          <Reveal>
+            <div className="inline-block p-16 bg-cream-50 shadow-2xl text-center border-t-4 border-terra-500">
+              <Gem className="w-8 h-8 mx-auto text-terra-500 mb-6" />
+              <h2 className="text-4xl md:text-5xl font-display text-forest-800 mb-6">The Royal Gallery</h2>
+              <p className="text-forest-800/70 mb-8 leading-relaxed font-sans text-lg">
+                Home to one of the largest private art collections in Europe.
+                Wander through corridors adorned with original Renaissance masterpieces
+                and contemporary avant-garde installations.
+              </p>
+              <Button variant="terra">Schedule Private Tour</Button>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -257,20 +228,20 @@ const LandingPage: React.FC = () => {
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-             {[
-               { icon: <Crown />, title: "Concierge", desc: "Our Clefs d'Or concierge team makes the impossible, possible." },
-               { icon: <Car />, title: "Chauffeur", desc: "Arrive in style with our fleet of vintage and modern luxury vehicles." },
-               { icon: <Wifi />, title: "Connectivity", desc: "Seamless high-speed fiber throughout the estate for business or leisure." },
-               { icon: <Star />, title: "Experiences", desc: "Private tours of the Louvre, fashion week access, and more." },
-             ].map((item, i) => (
-               <Reveal key={i} delay={i * 0.1} className="bg-white p-10 shadow-sm hover:shadow-xl transition-shadow duration-500 group">
-                 <div className="w-12 h-12 bg-cream-50 flex items-center justify-center rounded-full text-terra-500 mb-6 group-hover:bg-terra-500 group-hover:text-white transition-colors">
-                   {item.icon}
-                 </div>
-                 <h3 className="text-xl font-display font-bold text-forest-800 mb-3">{item.title}</h3>
-                 <p className="text-forest-800/60 text-sm leading-relaxed">{item.desc}</p>
-               </Reveal>
-             ))}
+            {[
+              { icon: <Crown />, title: "Concierge", desc: "Our Clefs d'Or concierge team makes the impossible, possible." },
+              { icon: <Car />, title: "Chauffeur", desc: "Arrive in style with our fleet of vintage and modern luxury vehicles." },
+              { icon: <Wifi />, title: "Connectivity", desc: "Seamless high-speed fiber throughout the estate for business or leisure." },
+              { icon: <Star />, title: "Experiences", desc: "Private tours of the Louvre, fashion week access, and more." },
+            ].map((item, i) => (
+              <Reveal key={i} delay={i * 0.1} className="bg-white p-10 shadow-sm hover:shadow-xl transition-shadow duration-500 group">
+                <div className="w-12 h-12 bg-cream-50 flex items-center justify-center rounded-full text-terra-500 mb-6 group-hover:bg-terra-500 group-hover:text-white transition-colors">
+                  {item.icon}
+                </div>
+                <h3 className="text-xl font-display font-bold text-forest-800 mb-3">{item.title}</h3>
+                <p className="text-forest-800/60 text-sm leading-relaxed">{item.desc}</p>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
@@ -279,51 +250,51 @@ const LandingPage: React.FC = () => {
       <section className="py-32 bg-forest-800 text-cream-50 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-64 h-64 bg-terra-500/10 rounded-full blur-3xl"></div>
         <div className="container mx-auto px-6 relative z-10">
-           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-             <div className="space-y-8">
-               <span className="text-terra-500 font-bold text-xs uppercase tracking-widest">Testimonials</span>
-               <h2 className="text-4xl md:text-5xl font-display leading-tight">
-                 "A sanctuary of silence and beauty in a chaotic world."
-               </h2>
-               <div className="flex gap-2">
-                 {[...Array(5)].map((_, i) => <Star key={i} className="fill-terra-500 text-terra-500 w-5 h-5" />)}
-               </div>
-               <div className="pt-8">
-                 <Button variant="outline" className="text-cream-50 border-cream-50/20 hover:bg-cream-50 hover:text-forest-800">Read All Reviews</Button>
-               </div>
-             </div>
-             
-             <div className="grid gap-6">
-               {testimonials.map((t, i) => (
-                 <motion.div 
-                   key={t.id}
-                   initial={{ opacity: 0, x: 50 }}
-                   whileInView={{ opacity: 1, x: 0 }}
-                   transition={{ delay: i * 0.2, duration: 0.8 }}
-                   className="bg-white/5 backdrop-blur p-8 border border-white/10 hover:bg-white/10 transition-colors"
-                 >
-                   <p className="font-serif italic text-lg mb-6 opacity-90">"{t.quote}"</p>
-                   <div className="flex items-center gap-4">
-                     <img src={t.image} alt={t.name} className="w-10 h-10 rounded-full object-cover" />
-                     <div>
-                       <div className="font-bold text-sm uppercase tracking-wide">{t.name}</div>
-                       <div className="text-xs text-terra-500">{t.role}</div>
-                     </div>
-                   </div>
-                 </motion.div>
-               ))}
-             </div>
-           </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div className="space-y-8">
+              <span className="text-terra-500 font-bold text-xs uppercase tracking-widest">Testimonials</span>
+              <h2 className="text-4xl md:text-5xl font-display leading-tight">
+                "A sanctuary of silence and beauty in a chaotic world."
+              </h2>
+              <div className="flex gap-2">
+                {[...Array(5)].map((_, i) => <Star key={i} className="fill-terra-500 text-terra-500 w-5 h-5" />)}
+              </div>
+              <div className="pt-8">
+                <Button variant="outline" className="text-cream-50 border-cream-50/20 hover:bg-cream-50 hover:text-forest-800">Read All Reviews</Button>
+              </div>
+            </div>
+
+            <div className="grid gap-6">
+              {testimonials.map((t, i) => (
+                <motion.div
+                  key={t.id}
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.2, duration: 0.8 }}
+                  className="bg-white/5 backdrop-blur p-8 border border-white/10 hover:bg-white/10 transition-colors"
+                >
+                  <p className="font-serif italic text-lg mb-6 opacity-90">"{t.quote}"</p>
+                  <div className="flex items-center gap-4">
+                    <img src={t.image} alt={t.name} className="w-10 h-10 rounded-full object-cover" />
+                    <div>
+                      <div className="font-bold text-sm uppercase tracking-wide">{t.name}</div>
+                      <div className="text-xs text-terra-500">{t.role}</div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
       {/* FAQ Section */}
       <section className="py-32 px-6 bg-cream-100">
         <div className="container mx-auto max-w-4xl">
-           <div className="text-center mb-16">
-             <h2 className="text-4xl font-display text-forest-800">Common <span className="italic text-terra-500">Inquiries</span></h2>
-           </div>
-           <Accordion items={faqs} />
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-display text-forest-800">Common <span className="italic text-terra-500">Inquiries</span></h2>
+          </div>
+          <Accordion items={faqs} />
         </div>
       </section>
 
